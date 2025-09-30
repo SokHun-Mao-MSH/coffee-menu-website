@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head"></head>
+<body class="bg-gradient-to-br from-yellow-50 to-green-50">
+  <div th:replace="fragments/order-header :: order-header"></div>
+  <style>
+    @keyframes pop-in {
+      0% { transform: scale(0.5); opacity: 0; }
+      80% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .animate-pop-in {
+      animation: pop-in 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+  </style>
+
+  <section class="py-20 min-h-screen flex items-center justify-center">
+    <div class="container mx-auto px-4 text-center">
+      <div class="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+        <div class="text-green-500 mb-4">
+          <svg class="w-20 h-20 mx-auto animate-pop-in" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">Order Placed Successfully!</h1>
+        <p class="text-gray-600 mb-6">Thank you for your purchase. We've received your order and will start processing it shortly.</p>
+        <a href="/index" class="mt-6 inline-flex items-center justify-center bg-yellow-500 text-black px-8 py-3 rounded-xl font-semibold hover:bg-yellow-600 transition shadow-md hover:shadow-lg">
+          <svg class="w-5 h-5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 15a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0h8m-8 0-1-4m9 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-9-4h10l2-7H3m2 7L3 4m0 0-.792-3H1"/>
+          </svg>
+          Continue Shopping 
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div th:replace="fragments/footer :: footer"></div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('clear') === 'true') {
+        localStorage.removeItem('cart');
+        // Also update the header cart count to 0 immediately
+        const countEls = document.querySelectorAll('.cart-count-badge');
+        countEls.forEach(el => {
+          el.textContent = '0';
+          el.classList.add('hidden');
+        });
+      }
+    });
+  </script>
+</body>
+</html>
